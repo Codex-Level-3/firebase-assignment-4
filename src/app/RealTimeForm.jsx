@@ -1,11 +1,11 @@
 "use client";
-
+// necessary functions and hooks from Firebase + React
 import { addDoc, collection } from "firebase/firestore";
 import { useState } from "react";
 import { db } from "./firebaseConfig";
 
 export default function RealTimeForm() {
-  //state management
+  //state management for user input fields
   const [user, setUser] = useState("");
   const [message, setMessage] = useState("");
 
@@ -23,10 +23,12 @@ export default function RealTimeForm() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
+      // Creates a new message object
       const newMessage = {
         user: user,
         message: message,
       };
+      // Calling addMessage function to add the new message to Firestore
       await addMessage(newMessage);
     } catch (error) {
       console.error("Error adding document: ", error);

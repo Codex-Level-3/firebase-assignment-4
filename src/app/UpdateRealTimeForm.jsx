@@ -1,11 +1,11 @@
 "use client";
-
+// importing necessary functions and hooks from Firebase + React
 import { doc, updateDoc } from "firebase/firestore";
 import { useState } from "react";
 import { db } from "./firebaseConfig";
 
 export default function UpdateRealTimeForm({ msg }) {
-  //state management
+  //state management for user input fields
   const [user, setUser] = useState(msg.user);
   const [message, setMessage] = useState(msg.message);
 
@@ -13,7 +13,9 @@ export default function UpdateRealTimeForm({ msg }) {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
+      // Reference the document to be updated in Firestore
       const msgRef = doc(db, "realTimeMessages", msg.id);
+      //Update the document with new user + message
       await updateDoc(msgRef, { user, message });
     } catch (error) {
       console.error("Error updating messages: ", error);
